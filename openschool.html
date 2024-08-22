@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>😰开学倒计时😰</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+        }
+        #countdown {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        #currentTime {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown"></div>
+    <div id="message">2024.8.25 18:00 回学校</div>
+    <div id="currentTime"></div>
+
+    <script>
+        function updateCountdown() {
+            const endTime = new Date("2024-08-25T18:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = endTime - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+
+            const currentTime = new Date();
+            const formattedTime = currentTime.toISOString().replace("T", " ").substr(0, 19);
+            document.getElementById("currentTime").innerHTML = `当前时间：${formattedTime}`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
