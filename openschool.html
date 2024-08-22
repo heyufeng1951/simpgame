@@ -20,6 +20,8 @@
         #countdown {
             font-size: 48px;
             margin-bottom: 20px;
+            font-weight: bold;
+            color: darkred;
         }
         #message {
             font-size: 24px;
@@ -33,7 +35,7 @@
 </head>
 <body>
     <div id="countdown"></div>
-    <div id="message">2024.8.25 18:00 回学校</div>
+    <div id="message">2024.8.25 18:00 回校</div>
     <div id="currentTime"></div>
 
     <script>
@@ -50,7 +52,7 @@
             document.getElementById("countdown").innerHTML = `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
 
             const currentTime = new Date();
-            const formattedTime = currentTime.toISOString().replace("T", " ").substr(0, 19);
+            const formattedTime = `${currentTime.getFullYear()}-${String(currentTime.getMonth() + 1).padStart(2, '0')}-${String(currentTime.getDate()).padStart(2, '0')} ${String(currentTime.getHours()).padStart(2, '0')}:${String(currentTime.getMinutes()).padStart(2, '0')}:${String(currentTime.getSeconds()).padStart(2, '0')}`;
             document.getElementById("currentTime").innerHTML = `当前时间：${formattedTime}`;
         }
 
