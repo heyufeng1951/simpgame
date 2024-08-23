@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>😰开学倒计时😰</title>
+    <title>死亡倒计时</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,18 +31,30 @@
             font-size: 18px;
             color: #555;
         }
+        #ended {
+            font-size: 36px;
+            color: darkgreen;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div id="countdown"></div>
-    <div id="message">2024-8-25 18:00 回校</div>
+    <div id="message">2024-8-25 18:00 趋势</div>
     <div id="currentTime"></div>
+    <div id="ended"></div>
 
     <script>
         function updateCountdown() {
             const endTime = new Date("2024-08-25T18:00:01").getTime();
             const now = new Date().getTime();
-            const distance = endTime - now;
+            let distance = endTime - now;
+
+            let endedMessage = '';
+            if (distance < 0) {
+                endedMessage = '倒计时已结束';
+                distance = Math.abs(distance);
+            }
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -50,14 +62,19 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             document.getElementById("countdown").innerHTML = `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+            document.getElementById("ended").innerHTML = endedMessage;
 
             const currentTime = new Date();
             const formattedTime = `${currentTime.getFullYear()}-${String(currentTime.getMonth() + 1).padStart(2, '0')}-${String(currentTime.getDate()).padStart(2, '0')} ${String(currentTime.getHours()).padStart(2, '0')}:${String(currentTime.getMinutes()).padStart(2, '0')}:${String(currentTime.getSeconds()).padStart(2, '0')}`;
             document.getElementById("currentTime").innerHTML = `当前时间：${formattedTime}`;
         }
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        function tick() {
+            updateCountdown();
+            requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
     </script>
 </body>
 </html>
